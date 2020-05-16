@@ -1,0 +1,60 @@
+Script to use Entity Framework
+
+Use Nuget to install:
+microsoft.entityframeworkcore.sqlserver
+microsoft.entityframeworkcore.tools
+
+create a SQL database by the SQL Server Object Explorer
+copy the connection string from property such as:
+Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BethanysPieShop;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+
+write it to the appsettings.json file:
+"ConnectionStrings": {
+    "DefaultConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BethanysPieShop;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+  },
+
+In the startup file, add:
+ services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            );
+
+In the DbContext model:
+Add:  
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    base.OnModelCreating(modelBuilder);
+    // feed the table with data objects by the HasData() method
+    modelBuilder.Entity<Category>().HasData(
+    new Category { CategoryId = 1, CategoryName = "Fruit pies" }
+    );
+}
+
+
+
+Create the SQL database by migration:
+add-migration <db name>
+update-database
+use HasData() on the DbContext
+
+
+Add DbContext
+create a AppDbContext class
+create the properties for the tables
+
+Write the Db connection to appsetting.json
+
+
+In the Startup.cs file
+Add: services.AddDbContext, set the option with the SQL Server connection string
+Add: public IConfiguration Configuration { get; }
+Add: public Startup(IConfiguration configuration){ Configuration = configuration; }
+
+Use Package Manager Console
+add-migration InitialMigration
+# add a new column to the table
+update-database
+add-migration NotesAddedOnPie
+update-database
+
+
+
