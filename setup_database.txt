@@ -1,3 +1,11 @@
+bootstrap - Add-Client-side library
+twitter-bootstrap@3.3.7
+
+Authentication
+install:
+microsoft.aspnetcore.identity.entityframeworkcore
+microsoft.aspnetcore.identity.ui
+
 Script to use Entity Framework
 
 Use Nuget to install:
@@ -55,6 +63,7 @@ add-migration InitialMigration
 update-database
 add-migration NotesAddedOnPie
 update-database
-
-
-
+add-migration ShoppingCartAdded
+update-database
+add-migration IdentityAdded
+update-database
